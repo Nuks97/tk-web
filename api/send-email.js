@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   const formData = new URLSearchParams();
   formData.append("from", `Website Contact Form <mailgun@${MAILGUN_DOMAIN}>`);
-  formData.append("to", "YOUR_EMAIL@gmail.com");   // <-- Change to your real email
+  formData.append("to", "manusekweta@gmail.com");   // <-- Change to your real email
   formData.append("subject", `${subject} (from ${name})`);
   formData.append(
     "text",
