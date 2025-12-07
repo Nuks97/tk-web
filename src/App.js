@@ -731,25 +731,44 @@ function App() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async () => {
-  if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-    alert("Please fill in all fields");
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await axios.post("https://tk-web-ckl1.vercel.app/api/send-email", formData);
-
-    if (res.status === 200) {
-      alert("Thank you for your message! We will get back to you soon.");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+    // Basic validation
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
+      alert("Please fill in all fields.");
+      return;
     }
-  } catch (error) {
-    console.error("Email send error:", error.response?.data || error.message);
-    const errorMsg = error.response?.data?.message || "Failed to send message. Please try again later.";
-    alert(errorMsg);
-  }
-};
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post("https://tk-web-ckl1.vercel.app/api/send-email", formData);
+
+      if (response.status === 200) {
+        alert("Thank you! Your message has been sent successfully.");
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      }
+    } catch (error) {
+      console.error("Email send error:", error);
+
+      alert(
+        "Failed to send your message. Please try again later or contact us directly."
+      );
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>

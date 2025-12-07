@@ -1,5 +1,3 @@
-import nodemailer from "nodemailer";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
@@ -7,49 +5,41 @@ export default async function handler(req, res) {
 
   const { name, email, subject, message } = req.body;
 
-  // Validate request body
-  if (!name || !email || !subject || !message) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
+  const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN;
+  const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
 
-  // Check for required environment variables
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error("Missing email environment variables");
-    return res.status(500).json({ 
-      message: "Server configuration error - missing email credentials" 
-    });
-  }
+  const url = `https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`;
+
+  const formData = new URLSearchParams();
+  formData.append("from", `Website Contact Form <mailgun@${MAILGUN_DOMAIN}>`);
+  formData.append("to", "YOUR_EMAIL@gmail.com");   // <-- Change to your real email
+  formData.append("subject", `${subject} (from ${name})`);
+  formData.append(
+    "text",
+    `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+  );
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Basic " +
+          Buffer.from(`api:${MAILGUN_API_KEY}`).toString("base64"),
+        "Content-Type": "application/x-www-form-urlencoded",
       },
+      body: formData,
     });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: "manusekweta@gmail.com",
-      replyTo: email,
-      subject: `${subject} (from ${name})`,
-      html: `
-        <h3>New Contact Form Submission</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
-      `,
-    });
+    if (!response.ok) {
+      const errData = await response.json();
+      console.error("Mailgun error:", errData);
+      return res.status(500).json({ message: "Mailgun error", error: errData });
+    }
 
-    res.status(200).json({ message: "Email sent successfully!" });
+    return res.status(200).json({ message: "Email sent successfully!" });
   } catch (err) {
-    console.error("Email Error:", err);
-    res.status(500).json({ 
-      message: "Failed to send email", 
-      error: err.message 
-    });
+    console.error("Server error:", err);
+    return res.status(500).json({ message: "Server error", error: err });
   }
 }
