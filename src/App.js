@@ -18,8 +18,8 @@ export default App;
 
 import React, { useState, useEffect } from 'react';
 import { Business, LocalShipping, Verified, Speed, Group, EmojiEvents, Security, Build, Category, DesignServices, Phone, Email, LocationOn, ContactSupport, Chat, Copyright, BusinessCenter } from '@mui/icons-material';
-import logo from "C:/Users/Emmanuels/Videos/TK/web/src/image/logo.png"
-import HeroImage from "C:/Users/Emmanuels/Videos/TK/web/src/image/blue.png"
+import logo from "../src/image/logo.png";
+import HeroImage from "../src/image/blue.png"; // Adjust the path as necessary
 import saps from "./Slides/SAPS.jpg"; // Adjust the path as necessary
 import dhet from './Slides/HigherE.png'; // Adjust the path as necessary
 import raf from './Slides/RAF.png'; // Adjust the path as necessary
@@ -45,6 +45,7 @@ import national from './Slides/National.png'; // Adjust the path as necessary
 import homeA from './Slides/HomeA.png'; // Adjust the path as necessary
 
 import Thulamela from './Slides/THULAMELA-MUNICIPALITY.png'; // Adjust the path as necessary
+import axios from "axios";
 
 import reno from './Slides/reno.jpg'; // Adjust the path as necessary
 import dsc from './Slides/dsc-product.webp'; 
