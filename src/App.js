@@ -745,8 +745,9 @@ function App() {
       setFormData({ name: "", email: "", subject: "", message: "" });
     }
   } catch (error) {
-    console.error(error);
-    alert("Failed to send message. Please try again later.");
+    console.error("Email send error:", error.response?.data || error.message);
+    const errorMsg = error.response?.data?.message || "Failed to send message. Please try again later.";
+    alert(errorMsg);
   }
 };
 

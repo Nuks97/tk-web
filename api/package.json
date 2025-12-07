@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "mailgun.js": "^12.4.0",
+    "form-data": "^4.0.5"
+  }
+}
