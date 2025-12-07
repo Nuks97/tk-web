@@ -745,8 +745,7 @@ function App() {
       return;
     }
 
-    setLoading(true);
-
+   
     try {
       const response = await axios.post("https://tk-web-ckl1.vercel.app/api/send-email", formData);
 
@@ -767,7 +766,6 @@ function App() {
       );
     }
 
-    setLoading(false);
   };
 
   return (
