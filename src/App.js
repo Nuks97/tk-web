@@ -738,7 +738,7 @@ function App() {
   }
 
   try {
-    const res = await axios.post("/api/send-email", formData);
+    const res = await axios.post("https://tk-web-ckl1.vercel.app/api/send-email", formData);
 
     if (res.status === 200) {
       alert("Thank you for your message! We will get back to you soon.");
