@@ -18,6 +18,7 @@ export default App;
 
 import React, { useState, useEffect } from 'react';
 import { Business, LocalShipping, Verified, Speed, Group, EmojiEvents, Security, Build, Category, DesignServices, Phone, Email, LocationOn, ContactSupport, Chat, Copyright, BusinessCenter } from '@mui/icons-material';
+import { Snackbar, Alert, CircularProgress } from '@mui/material';
 import logo from "../src/image/logo.png";
 import HeroImage from "../src/image/blue.png"; // Adjust the path as necessary
 import saps from "./Slides/SAPS.jpg"; // Adjust the path as necessary
@@ -59,6 +60,7 @@ import {
  Engineering, Construction, CleaningServices, Event,
   
 } from '@mui/icons-material';
+import emailjs from "@emailjs/browser";
 
 
 // Logo placeholder - replace with your actual logo import
@@ -280,6 +282,14 @@ const Navbar = ({ activeSection, setActiveSection }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
+    // Initialize EmailJS with environment variable
+    console.log("EmailJS Keys loaded:", {
+      serviceId: process.env.REACT_APP_EMAILJS_SERVICE_ID,
+      templateId: process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+      publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY ? "✓ Loaded" : "✗ Missing"
+    });
+    emailjs.init(process.env.REACT_APP_EMAILJS_PUBLIC_KEY);
+    
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -726,47 +736,65 @@ function App() {
     subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success' // 'success' or 'error'
+  });
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Basic validation
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.subject ||
-      !formData.message
-    ) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-   
-    try {
-      const response = await axios.post("https://tk-web-ckl1.vercel.app/api/send-email", formData);
-
-      if (response.status === 200) {
-        alert("Thank you! Your message has been sent successfully.");
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      }
-    } catch (error) {
-      console.error("Email send error:", error);
-
-      alert(
-        "Failed to send your message. Please try again later or contact us directly."
-      );
-    }
-
+  const handleCloseNotification = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setNotification({ ...notification, open: false });
   };
+
+ const handleSubmit = async () => {
+  if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+    setNotification({
+      open: true,
+      message: "Please fill in all fields",
+      severity: 'error'
+    });
+    return;
+  }
+
+  setLoading(true);
+  try {
+    await emailjs.send(
+      process.env.REACT_APP_EMAILJS_SERVICE_ID,     
+      process.env.REACT_APP_EMAILJS_TEMPLATE_ID,   
+      {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      },
+      process.env.REACT_APP_EMAILJS_PUBLIC_KEY      
+    );
+
+    setNotification({
+      open: true,
+      message: "Thank you! Your message has been sent ✅",
+      severity: 'success'
+    });
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    setLoading(false);
+
+  } catch (error) {
+    console.error("EmailJS error:", error);
+    setNotification({
+      open: true,
+      message: "Failed to send message. Please try again later.",
+      severity: 'error'
+    });
+    setLoading(false);
+  }
+};
+
 
   return (
     <div style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
@@ -1233,26 +1261,41 @@ function App() {
                       onFocus={(e) => e.target.style.borderColor = colors.primary}
                       onBlur={(e) => e.target.style.borderColor = `${colors.primary}20`}
                     />
-                    <button onClick={handleSubmit} style={{
-                      backgroundColor: colors.primary,
+                    <button onClick={handleSubmit} disabled={loading} style={{
+                      backgroundColor: loading ? '#ccc' : colors.primary,
                       color: '#fff',
                       padding: '1rem 2rem',
                       borderRadius: '8px',
                       border: 'none',
                       fontSize: '1rem',
                       fontWeight: 600,
-                      cursor: 'pointer',
+                      cursor: loading ? 'not-allowed' : 'pointer',
                       transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = colors.secondary;
-                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      if (!loading) {
+                        e.currentTarget.style.backgroundColor = colors.secondary;
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#6fbadc';
-                      e.currentTarget.style.transform = 'translateY(0)';
+                      if (!loading) {
+                        e.currentTarget.style.backgroundColor = colors.primary;
+                        e.currentTarget.style.transform = 'translateY(0)';
+                      }
                     }}>
-                      Send Message
+                      {loading ? (
+                        <>
+                          <CircularProgress size={20} sx={{ color: '#fff' }} />
+                          Sending...
+                        </>
+                      ) : (
+                        "Send Message"
+                      )}
                     </button>
                   </div>
                 </div>
@@ -1476,6 +1519,18 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* Notification Snackbar */}
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={6000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseNotification} severity={notification.severity} sx={{ width: '100%', minWidth: '300px' }}>
+          {notification.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
