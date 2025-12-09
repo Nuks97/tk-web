@@ -371,7 +371,7 @@ We also stand behind our recommendations and to assist our clients in providing 
     icon: <RateReview sx={{ color: colors.primary }} />,
     testimonials: [
       {
-        quote: "Takalani TR delivered our IT upgrade project ahead of schedule with exceptional quality. Their team was professional and responsive throughout the entire process.",
+        quote: "Takalani TR (PTY) Ltd delivered our IT upgrade project ahead of schedule with exceptional quality. Their team was professional and responsive throughout the entire process.",
         author: "James Khumalo",
         position: "IT Director, SAPS",
         photo: "/testimonials/james-k.jpg"
@@ -910,7 +910,7 @@ function Home1() {
           <Box
             component="img"
             src={logo}
-            alt="Takalani TR"
+            alt="Takalani TR (PTY) Ltd"
             sx={{
               height: 40,
               objectFit: 'contain',
@@ -990,7 +990,7 @@ function Home1() {
             color: colors.lightText,
             lineHeight: 1.6
           }}>
-            Takalani TR &copy; {new Date().getFullYear()}
+            Takalani TR (PTY) Ltd &copy; {new Date().getFullYear()}
             <br />
             All rights reserved
           </Typography>

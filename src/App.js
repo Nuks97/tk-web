@@ -218,7 +218,7 @@ const sections = [
     label: 'Testimonials',
     icon: <Group sx={{ fontSize: 40, color: colors.primary }} />,
     testimonials: [
-      { name: 'James Khumalo', company: 'IT Director, SAPS', text: 'Takalani TR delivered our IT upgrade project ahead of schedule with exceptional quality. Their team was professional and responsive throughout the entire process.', rating: 5 },
+      { name: 'James Khumalo', company: 'IT Director, SAPS', text: 'Takalani TR (PTY) Ltd delivered our IT upgrade project ahead of schedule with exceptional quality. Their team was professional and responsive throughout the entire process.', rating: 5 },
       { name: 'Sarah Ndlovu', company: 'Facilities Manager, GP Health', text: 'The construction work done on our facilities exceeded our expectations. They handled all challenges efficiently and delivered a flawless result.', rating: 5 },
       { name: 'David Smith', company: 'Operations Manager, DCS', text: 'Their maintenance team provides excellent ongoing support. Quick response times and thorough work every time. Highly recommended!', rating: 4 }
     ]
@@ -361,7 +361,7 @@ const Navbar = ({ activeSection, setActiveSection }) => {
         >
           <img 
             src={logo}
-            alt="Takalani TR" 
+            alt="Takalani TR (PTY) Ltd" 
             style={{
               height: isMobile ? '80px' : (scrolled ? '90px' : '110px'),
               width: 'auto',

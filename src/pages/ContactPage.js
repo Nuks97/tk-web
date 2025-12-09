@@ -500,7 +500,7 @@ const ContactPage = () => {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
                 }}>
-                  Takalani TR
+                  Takalani TR (PTY) Ltd
                 </Typography>
               </Box>
               <Typography variant="body1" sx={{ 
