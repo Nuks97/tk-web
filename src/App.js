@@ -840,7 +840,10 @@ function App() {
       zIndex: 1,  // ensures content is above the overlay
     }}
   >
-    <h1
+    <motion.h1
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       style={{
         fontSize: isMobile ? '2.5rem' : '3.5rem',
         fontWeight: 800,
@@ -853,8 +856,11 @@ function App() {
       }}
     >
       Adhering to high level of integrity and Ensuring delivery as promised
-    </h1>
-    <p
+    </motion.h1>
+    <motion.p
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
       style={{
         fontSize: isMobile ? '1rem' : '1.5rem',
         maxWidth: '800px',
@@ -864,7 +870,7 @@ function App() {
     >
       Professional supply, delivery, and maintenance services for businesses nationwide. 
       Trusted by both private and public organizations since 2017.
-    </p>
+    </motion.p>
   </div>
 </div>
 
