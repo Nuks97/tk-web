@@ -3,7 +3,7 @@
 ## Project Overview
 Building a professional website for Takalani TR (PTY) Ltd - a BBBEE Level 1 certified company specializing in supply, delivery, and maintenance services.
 
-**Domain:** takalantr.com (custom domain to be connected)
+**Domain:** takalanitr.com (custom domain to be connected)
 **Hosting:** Vercel
 **Repository:** https://github.com/Nuks97/tk-web
 
