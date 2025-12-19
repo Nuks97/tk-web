@@ -98,8 +98,8 @@ const sections = [
       },
       { 
         icon: '🤝', 
-        title: 'Integrity', 
-        description: 'Maintaining the highest ethical standards' 
+        title: 'Team Work', 
+        description: 'Collaborating effectively to achieve shared goals and success' 
       },
       { 
         icon: '⚡', 
@@ -973,19 +973,22 @@ function App() {
 
               {/* Section Content */}
               {section.id === 'values' && (
-                <div style={{
-                  display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-      gap: '2rem',
-      justifyContent: 'center',   // centers the whole grid block if it has extra space
-      justifyItems: 'center',     // <-- centers content of each grid cell so last row appears balanced
-      alignItems: 'stretch',
-      width: '100%',
-      padding: '2rem 0',
-                }}>
-                  {section.items.map((value, idx) => (
-                    <ValueCard key={idx} {...value} />
-                  ))}
+                <div>
+                 
+                  <div style={{
+                    display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+        gap: '2rem',
+        justifyContent: 'center',   // centers the whole grid block if it has extra space
+        justifyItems: 'center',     // <-- centers content of each grid cell so last row appears balanced
+        alignItems: 'stretch',
+        width: '100%',
+        padding: '2rem 0',
+                  }}>
+                    {section.items.map((value, idx) => (
+                      <ValueCard key={idx} {...value} />
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -1313,10 +1316,10 @@ function App() {
 <div
   style={{
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gridTemplateColumns: isMobile ? '1fr' : '0.8fr 1.5fr',
     gap: '3rem',
     position: 'relative',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   }}
 >
   {/* Image Section with Orange Overlap */} 
@@ -1373,35 +1376,55 @@ function App() {
 
 <p
   style={{
-    fontSize: '1.1rem',
-    lineHeight: 1.5,
+    fontSize: '1rem',
+    lineHeight: 1.6,
     color: '#555',
     marginBottom: '1.2rem',
+    width: '100%',
   }}
 >
-  Takalani TR (PTY) Ltd is committed to delivering advanced engineering and
-  professional solutions that empower businesses and organizations nationwide.
-  With years of experience and a dedicated team, we provide reliable, innovative,
-  and cost-effective services tailored to client needs.
+Takalani TR (PTY) Ltd is a dynamic Black Woman-Owned enterprise established in 2017 (Registration No: 2017/254455/07), with operational presence across all nine provinces of South Africa. We deliver comprehensive solutions in supply chain management, logistics, engineering, construction, and maintenance services. Our capabilities span IT infrastructure, transportation, warehouse management, facilities maintenance, building materials supply, and specialized event services. We pride ourselves on strategic partnerships with both public and private sector organizations.
 </p>
 
 <p
   style={{
-    fontSize: '1.1rem',
-    lineHeight: 1.5,
+    fontSize: '1rem',
+    lineHeight: 1.6,
     color: '#555',
-    marginBottom: '1.3rem',
+    marginBottom: '1.2rem',
+    width: '100%',
   }}
 >
-  Our work spans technology services, supply and installation, office equipment,
-  research and innovation, and large-scale business support. We take pride in our
-  ability to exceed expectations and build long-term partnerships.
+It consist of  professional personnel who are qualified and innovative and have  the  
+necessary  skills  and  years  of  experience  to  respond  to  today's,  challenging issues   and  
+ needs.   Exceeding   client   satisfaction   motivates   Takalani   TR   Limited professional team 
+of staff.
+</p>
+
+<p
+  style={{
+ fontSize: '1rem',
+    lineHeight: 1.6,
+    color: '#555',
+    marginBottom: '1.2rem',
+    width: '100%',
+  }}
+>
+ 
+Through our unique innovation, we are able to help our customers to build a reliable, secure, manageable, efficient, and flexible infrastructure. We ensure that we establish a lasting foundation for our clients to meet their business objectives.
+We have confidence in our ability to generate the consensus and commitments necessary to succeed.
+We are prepared to contribute towards elevation of South Africa economy and to be a leader in the supply, delivery, installation, and maintenance value chain by providing an enhanced services, partnership, and cost-effectiveness solution to our clients.
+We also stand behind our recommendations and to assist our clients in providing high quality services to their stakeholders.
+
 </p>
 
 {/* Mission */}
 <h3 style={{ fontSize: '1.4rem', marginBottom: '0.8rem', color: '#333' }}>
   Mission
 </h3>
+<p style={{ fontSize: '1rem', lineHeight: 1.6, color: '#555', marginBottom: '1.2rem' }}>
+  Through our unique innovation, we are able to help our customers to build a reliable, secure, manageable, efficient, and flexible infrastructure. We ensure that we establish a lasting foundation for our clients to meet their business objectives.
+</p>
 <ul style={{ marginLeft: '1.2rem', marginBottom: '1.3rem', color: '#555', lineHeight: 1.7 }}>
   <li>Adhering to a high level of integrity and ensuring delivery as promised</li>
   <li>Building long-term partnerships with our clients</li>
@@ -1412,6 +1435,9 @@ function App() {
 <h3 style={{ fontSize: '1.4rem', marginBottom: '0.8rem', color: '#333' }}>
   Objectives
 </h3>
+<p style={{ fontSize: '1rem', lineHeight: 1.6, color: '#555', marginBottom: '1.2rem' }}>
+  We have confidence in our ability to generate the consensus and commitments necessary to succeed. We are prepared to contribute towards elevation of South Africa economy and to be a leader in the supply, delivery, installation, and maintenance value chain by providing an enhanced services, partnership, and cost-effectiveness solution to our clients. We also stand behind our recommendations and to assist our clients in providing high quality services to their stakeholders.
+</p>
 <ul style={{ marginLeft: '1.2rem', marginBottom: '1.3rem', color: '#555', lineHeight: 1.7 }}>
   <li>To provide professional and engineering products and services</li>
   <li>To assist clients with implementing strategic, operational, and capital business projects</li>
